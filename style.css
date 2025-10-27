@@ -1,7 +1,42 @@
+body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  gap: 20px;
+  padding: 20px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  body {
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-areas: 
+      "header header header"
+      "sidebar main aside"
+      "footer footer footer";
+  }
+}
+
+.header {
+  grid-area: header;
+}
+
+.main-content {
+  grid-area: main;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.footer {
+  grid-area: footer;
+}
+
 h1:not(.intro-text h1) {
   text-align: center;
 }
-
 h1 img {
   width: 200px;
   height: 250px;
@@ -88,5 +123,7 @@ h1 img {
   font-size: 18px;
   margin-top: 5px;
 }
+
+
 
   
