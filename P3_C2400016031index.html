@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html> 
+<head>
+    <title>To-Do App</title>
+    <style>
+        body{
+            font-family:sans-serif;
+        }
+        .container{
+            width:350px;
+            margin: 0 auto;
+        }
+        input[type="text"]{
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        #taskList{
+           list-style: none;
+           padding:0
+        }
+        #taskList li{
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .close{
+            color:red;
+            float:right;
+            cursor:pointer;
+        }
+        .completed {
+        text-decoration: line-through;
+        color: gray;
+        }
+
+      </style>
+    </head>
+    
+    <body>
+
+        <div class="container">
+            <h2>my To-Do List</h2>
+            <input type="text" id="newTask" placeholder="Add a new task...">
+            <button onclick="addTask()">Add</button>
+
+            <ul id="taskList">
+            </ul>
+        </div>
+
+        <script>
+            function addTask() {
+                const input = document.getElementById("newTask");
+                const taskText = input.value.trim();
+
+                if (taskText === "") {
+                    alert("Masukkan tugas terlebih dahulu!");
+                    return;
+                }
+
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <span ondblclick="editTask(this)">${taskText}</span>
+                    <span class="close" onclick="deleteTask(this)">X</span>
+                `;
+
+   
+                li.querySelector("span:first-child").addEventListener("click", function() {
+                    this.classList.toggle("completed");
+                });
+
+                document.getElementById("taskList").appendChild(li);
+                input.value = ""; 
+            }
+
+
+            function deleteTask(element){
+                const li = element.parentElement; 
+                li.remove(); 
+            }   
+
+            function editTask(element){ 
+                const currentText = element.innerText;
+                const input = document.createElement("input");
+                input.type = "text";
+                input.value = currentText;
+                input.style.width = "80%";
+
+                element.replaceWith(input);
+                input.focus();
+
+                input.addEventListener("keydown", function(e){
+                    if(e.key === "Enter"){
+                        const span = document.createElement("span");
+                        span.innerText = input.value;
+                        span.ondblclick = function() { editTask(this); };
+                        // klik untuk tandai selesai
+                        span.addEventListener("click", function() {
+                            this.classList.toggle("completed");
+                        });
+                        input.replaceWith(span);
+                    }
+                });
+            }
+        
+        </script>
+
+    </body>
+
+    </html>
+
+
+    
